@@ -2,7 +2,7 @@
 param location string = resourceGroup().location
 
 @description('Password for the SQL Server admin user. PLEASE CHANGE THIS BEFORE DEPLOYMENT!')
-param sqlAdminPassword string = 'g@G9@2nD7C1BP%uh'
+param sqlAdminPassword string = 'Solution$1'
 
 @description('Model deployments for OpenAI')
 param deployments array = [
@@ -24,30 +24,30 @@ param restore bool = false
 @description('The email address of the owner of the service')
 @minLength(1)
 param apimPublisherEmail string = 'support@contososuites.com'
-
-var apiManagementServiceName = 'apim-${uniqueString(resourceGroup().id)}'
+var prefixStr = 'techexcelaidw'
+var apiManagementServiceName = 'apim-${prefixStr}'
 var apimSku = 'Basicv2'
 var apimSkuCount = 1
 var apimPublisherName = 'Contoso Suites'
 
-var cosmosDbName = '${uniqueString(resourceGroup().id)}-cosmosdb'
+var cosmosDbName = '${prefixStr}-cosmosdb'
 var cosmosDbDatabaseName = 'ContosoSuites'
-var storageAccountName = '${uniqueString(resourceGroup().id)}sa'
-var searchServiceName = '${uniqueString(resourceGroup().id)}-search'
-var openAIName = '${uniqueString(resourceGroup().id)}-openai'
-var speechServiceName = '${uniqueString(resourceGroup().id)}-speech'
-var languageServiceName = '${uniqueString(resourceGroup().id)}-lang'
-var webAppNameApi = '${uniqueString(resourceGroup().id)}-api'
-var webAppNameDash = '${uniqueString(resourceGroup().id)}-dash'
-var appServicePlanName = '${uniqueString(resourceGroup().id)}-cosu-asp'
-var functionAppName = '${uniqueString(resourceGroup().id)}-cosu-fn'
-var functionAppServicePlanName = '${uniqueString(resourceGroup().id)}-cosu-fn-asp'
-var logAnalyticsName = '${uniqueString(resourceGroup().id)}-cosu-la'
-var appInsightsName = '${uniqueString(resourceGroup().id)}-cosu-ai'
+var storageAccountName = '${prefixStr}sa'
+var searchServiceName = '${prefixStr}-search'
+var openAIName = '${prefixStr}-openai'
+var speechServiceName = '${prefixStr}-speech'
+var languageServiceName = '${prefixStr}-lang'
+var webAppNameApi = '${prefixStr}-api'
+var webAppNameDash = '${prefixStr}-dash'
+var appServicePlanName = '${prefixStr}-cosu-asp'
+var functionAppName = '${prefixStr}-cosu-fn'
+var functionAppServicePlanName = '${prefixStr}-cosu-fn-asp'
+var logAnalyticsName = '${prefixStr}-cosu-la'
+var appInsightsName = '${prefixStr}-cosu-ai'
 var webAppSku = 'S1'
-var registryName = '${uniqueString(resourceGroup().id)}cosureg'
+var registryName = '${prefixStr}cosureg'
 var registrySku = 'Standard'
-var sqlServerName = '${uniqueString(resourceGroup().id)}-sqlserver'
+var sqlServerName = '${prefixStr}-sqlserver'
 var sqlDatabaseName = 'ContosoSuitesBookings'
 var sqlAdminUsername = 'contosoadmin'
 
@@ -255,7 +255,7 @@ resource appServiceApp 'Microsoft.Web/sites@2022-09-01' = {
     httpsOnly: true
     clientAffinityEnabled: false
     siteConfig: {
-      linuxFxVersion: 'DOCKER|${containerRegistry.name}.azurecr.io/${uniqueString(resourceGroup().id)}/techexcel/csapi'
+      linuxFxVersion: 'DOCKER|${containerRegistry.name}.azurecr.io/${prefixStr}/techexcel/csapi'
       http20Enabled: true
       minTlsVersion: '1.2'
       appCommandLine: ''
@@ -294,7 +294,7 @@ resource appServiceAppDash 'Microsoft.Web/sites@2022-09-01' = {
     httpsOnly: true
     clientAffinityEnabled: false
     siteConfig: {
-      linuxFxVersion: 'DOCKER|${containerRegistry.name}.azurecr.io/${uniqueString(resourceGroup().id)}/techexcel/csdash'
+      linuxFxVersion: 'DOCKER|${containerRegistry.name}.azurecr.io/${prefixStr}/techexcel/csdash'
       http20Enabled: true
       minTlsVersion: '1.2'
       appCommandLine: ''
