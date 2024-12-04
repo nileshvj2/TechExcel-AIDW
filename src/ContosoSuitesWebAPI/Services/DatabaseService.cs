@@ -9,16 +9,15 @@ namespace ContosoSuitesWebAPI.Services;
 /// </summary>
 public class DatabaseService : IDatabaseService
 {    
-    // IConfiguration Config { get; set; }
-    // string? SQLAZURECONNSTR_ContosoSuites = ""; //"Server=tcp:techexcelaidw-sqlserver.database.windows.net,1433;Initial Catalog=ContosoSuitesBookings;Persist Security Info=False;User ID=contosoadmin;Password=Solution$1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";        
-    // public DatabaseService()
-    // {
-    //     Config = new ConfigurationBuilder()
-    //         .AddJsonFile("appsettings.json")
-    //         .Build();
-
-    //     SQLAZURECONNSTR_ContosoSuites = Config.GetConnectionString("AzureSQLContosoConnection");
-    // }
+    IConfiguration Config { get; set; }
+    string? SQLAZURECONNSTR_ContosoSuites = ""; //"Server=tcp:techexcelaidw-sqlserver.database.windows.net,1433;Initial Catalog=ContosoSuitesBookings;Persist Security Info=False;User ID=contosoadmin;Password=Solution$1;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";        
+    public DatabaseService()
+    {
+        Config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();        
+        SQLAZURECONNSTR_ContosoSuites = Config.GetConnectionString("AzureSQLContosoConnection");
+    }
     /// <summary>
     /// Get all hotels from the database.
     /// </summary>
@@ -28,7 +27,7 @@ public class DatabaseService : IDatabaseService
         
         
         using var conn = new SqlConnection(     
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")! //SQLAZURECONNSTR_ContosoSuites
+            connectionString: SQLAZURECONNSTR_ContosoSuites //Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")!
         );
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
@@ -56,7 +55,7 @@ public class DatabaseService : IDatabaseService
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID";
         using var conn = new SqlConnection(
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")! //SQLAZURECONNSTR_ContosoSuites
+            connectionString: SQLAZURECONNSTR_ContosoSuites //Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")! 
         );
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
@@ -87,7 +86,7 @@ public class DatabaseService : IDatabaseService
     {
         var sql = "SELECT BookingID, CustomerID, HotelID, StayBeginDate, StayEndDate, NumberOfGuests FROM dbo.Booking WHERE HotelID = @HotelID AND StayBeginDate >= @StayBeginDate";
         using var conn = new SqlConnection(
-            connectionString: Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")! //SQLAZURECONNSTR_ContosoSuites
+            connectionString: SQLAZURECONNSTR_ContosoSuites //Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ContosoSuites")!
         );
         conn.Open();
         using var cmd = new SqlCommand(sql, conn);
